@@ -1,0 +1,36 @@
+# Runtime caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Local datasets and generated outputs
+dataset/
+output/
+output_ablation/
+test_result/
+test_result_ablation/
+test_result_smoke/
+changemap_test_result/
+runs/
+checkpoints/
+
+# Logs and local notes
+*.log
+nohup.out
+trainword.txt
+
+# Large local weights. Keep weights/README.md tracked.
+weights/*.pth
+weights/*.pt
+weights/*.ckpt
+!weights/AOGMF_WHU_best_iou.pth
+
+# Legacy CGNet submission assets kept locally only.
+/README.md
+CGNet.pdf
+CGNetTestResult/
+picture/CGNet*.png
+picture/HANet-HCGMNet-CGNet.png
+output/download CGNet model weight.txt
+network/CGNet.py
+train_CGNet.py
