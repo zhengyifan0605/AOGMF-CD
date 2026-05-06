@@ -26,6 +26,7 @@ weights/*.ckpt
 !weights/AOGMF_WHU_best_iou.pth
 
 # Legacy CGNet submission assets kept locally only.
+README_old.md
 CGNet.pdf
 CGNetTestResult/
 picture/CGNet*.png
