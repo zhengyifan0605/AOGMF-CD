@@ -4,16 +4,24 @@ AOGMF-CD is a remote-sensing change detection project. The main model entry is `
 
 ## Reviewer Quick Start
 
-Use Git LFS when cloning the repository, because the default model checkpoint is about 159M.
+Clone the repository or download the source code ZIP:
 
 ```bash
-git lfs install
 git clone <repo-url>
 cd AOGMF-CD
-git lfs pull
 ```
 
-For Git LFS repositories, use `git clone` rather than a source-code ZIP download so that the checkpoint is available as a real `.pth` file instead of an LFS pointer file.
+Download the release asset `AOGMF_WHU_best_iou.pth` from:
+
+```text
+https://github.com/zhengyifan0605/AOGMF-CD/releases
+```
+
+Then place it at:
+
+```text
+weights/AOGMF_WHU_best_iou.pth
+```
 
 Create and activate the environment:
 
@@ -100,22 +108,30 @@ A minimal test sample is included under:
 ```text
 sample_data/WHU/test/
   A/
-    test256_0_309_4.png
+    test256_0_9_3.png
   B/
-    test256_0_309_4.png
+    test256_0_9_3.png
   label/
-    test256_0_309_4.png
+    test256_0_9_3.png
 ```
 
 The sample is intended for command and I/O verification only. Metrics from a single sample may be `nan` for classes that are absent in the label or prediction.
 
 ## Weights
 
-Put the default test weight at:
+Download the default WHU test checkpoint from the GitHub Releases page and place it at:
 
 ```text
 weights/AOGMF_WHU_best_iou.pth
 ```
+
+Release page:
+
+```text
+https://github.com/zhengyifan0605/AOGMF-CD/releases
+```
+
+After downloading the asset `AOGMF_WHU_best_iou.pth`, keep the filename unchanged and put it directly under the `weights/` directory.
 
 The local verified file has SHA256:
 
@@ -123,8 +139,7 @@ The local verified file has SHA256:
 f8fd8068f3c4dfb3035d66b4da8e355ba8114a00df402cee4b9f2b1b8301b031
 ```
 
-The file is about 159M. A normal GitHub Git push rejects files over 100M, so publish this weight through Git LFS or a GitHub Release asset while keeping the same local path.
-This repository is prepared for the Git LFS path by tracking `weights/AOGMF_WHU_best_iou.pth` in `.gitattributes`.
+The file is about 159M, so it is distributed through GitHub Releases instead of being tracked in the Git repository.
 
 ## Train
 
