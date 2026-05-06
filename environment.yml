@@ -1,0 +1,21 @@
+name: cgnet
+channels:
+  - pytorch
+  - nvidia
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.10
+  - pytorch
+  - torchvision
+  - pytorch-cuda=12.1
+  - numpy
+  - pillow
+  - tqdm
+  - matplotlib
+  - tensorboardx
+  - opencv
+  - git-lfs
+  - pip
+  - pip:
+      - thop
