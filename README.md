@@ -1,48 +1,48 @@
 # AOGMF-CD
 
-AOGMF-CD is a remote-sensing change detection project. The main model entry is `AOGMF` in `network/AOGMF.py`, with training and testing scripts provided by `train_AOGMF.py` and `test.py`.
+AOGMF-CD 是一个遥感变化检测项目。主模型入口为 `network/AOGMF.py` 中的 `AOGMF`，训练与测试脚本分别为 `train_AOGMF.py` 和 `test.py`。
 
-## Reviewer Quick Start
+## 验收快速开始
 
-Clone the repository or download the source code ZIP:
+克隆仓库或下载源码 ZIP：
 
 ```bash
-git clone <repo-url>
+git clone https://github.com/zhengyifan0605/AOGMF-CD
 cd AOGMF-CD
 ```
 
-Download the release asset `AOGMF_WHU_best_iou.pth` from:
+从以下地址下载 Release 资产 `AOGMF_WHU_best_iou.pth`：
 
 ```text
 https://github.com/zhengyifan0605/AOGMF-CD/releases
 ```
 
-Then place it at:
+然后将其放到：
 
 ```text
 weights/AOGMF_WHU_best_iou.pth
 ```
 
-Create and activate the environment:
+创建并激活环境：
 
 ```bash
 conda env create -f environment.yml
 conda activate cgnet
 ```
 
-Verify that the checkpoint was downloaded correctly:
+验证权重文件是否下载正确：
 
 ```bash
 sha256sum weights/AOGMF_WHU_best_iou.pth
 ```
 
-Expected SHA256:
+预期的 SHA256 为：
 
 ```text
 f8fd8068f3c4dfb3035d66b4da8e355ba8114a00df402cee4b9f2b1b8301b031
 ```
 
-Run the included sample test:
+运行仓库附带的样例测试：
 
 ```bash
 python test.py \
@@ -55,37 +55,32 @@ python test.py \
   --save_path test_result_smoke/
 ```
 
-The expected behavior is that the script loads `weights/AOGMF_WHU_best_iou.pth`, runs one test image pair from `sample_data/WHU/test/`, and writes a prediction image under `test_result_smoke/WHU/AOGMF_APM+MBDCB+PFF+CGA/`.
+预期行为是：脚本会加载 `weights/AOGMF_WHU_best_iou.pth`，对 `sample_data/WHU/test/` 中的一组测试图像进行推理，并将预测结果写入 `test_result_smoke/WHU/AOGMF_APM+MBDCB+PFF+CGA/`。
 
-## Environment
+## 环境配置
 
-The environment used for verification was created on a GPU machine with NVIDIA RTX 4090 and CUDA available:
+本项目验证时使用的是带 NVIDIA RTX 4090 且 CUDA 可用的 GPU 机器，环境创建方式如下：
 
 ```bash
 conda env create -f environment.yml
 conda activate cgnet
 ```
 
-The scripts call `.cuda()` directly, so an NVIDIA GPU with a working CUDA driver is required for training and testing unless the code is modified for CPU execution.
+脚本中直接调用了 `.cuda()`，因此训练和测试默认都需要带有可用 CUDA 驱动的 NVIDIA GPU，除非你自行修改代码以支持 CPU 执行。
 
-If the environment already exists, update it with:
 
-```bash
-conda env update -n cgnet -f environment.yml
-```
-
-Verified package versions in the local `cgnet` environment:
+本地 `cgnet` 环境中验证通过的关键包版本如下：
 
 - Python 3.10
 - PyTorch 2.4.0
 - torchvision 0.19.0
 - thop 0.1.1.post2209072238
 
-The model code uses `torchvision.models.vgg16_bn(pretrained=True)`. On the first model construction, torchvision may download the VGG16-BN ImageNet pretrained weight `vgg16_bn-6c64b313.pth` into the local Torch cache.
+模型代码中使用了 `torchvision.models.vgg16_bn(pretrained=True)`。首次构建模型时，`torchvision` 可能会将 VGG16-BN 的 ImageNet 预训练权重 `vgg16_bn-6c64b313.pth` 下载到本地 Torch 缓存目录。
 
-## Data Layout
+## 数据目录结构
 
-Training, validation, and test directories should use this layout:
+训练、验证和测试数据建议使用如下目录结构：
 
 ```text
 dataset/WHU-CD256-HANet/
@@ -103,7 +98,7 @@ dataset/WHU-CD256-HANet/
     label/
 ```
 
-A minimal test sample is included under:
+仓库中附带了一个最小测试样例，目录如下：
 
 ```text
 sample_data/WHU/test/
@@ -115,35 +110,35 @@ sample_data/WHU/test/
     test256_0_9_3.png
 ```
 
-The sample is intended for command and I/O verification only. Metrics from a single sample may be `nan` for classes that are absent in the label or prediction.
+该样例仅用于命令和输入输出流程验证。由于只有单个样本，当标签或预测中缺失某一类别时，评估指标中可能出现 `nan`。
 
-## Weights
+## 权重说明
 
-Download the default WHU test checkpoint from the GitHub Releases page and place it at:
+从 GitHub Releases 页面下载默认的 WHU 测试权重，并放到：
 
 ```text
 weights/AOGMF_WHU_best_iou.pth
 ```
 
-Release page:
+Release 页面：
 
 ```text
 https://github.com/zhengyifan0605/AOGMF-CD/releases
 ```
 
-After downloading the asset `AOGMF_WHU_best_iou.pth`, keep the filename unchanged and put it directly under the `weights/` directory.
+下载资产 `AOGMF_WHU_best_iou.pth` 后，请保持文件名不变，并直接放置在 `weights/` 目录下。
 
-The local verified file has SHA256:
+本地验证通过的权重文件 SHA256 为：
 
 ```text
 f8fd8068f3c4dfb3035d66b4da8e355ba8114a00df402cee4b9f2b1b8301b031
 ```
 
-The file is about 159M, so it is distributed through GitHub Releases instead of being tracked in the Git repository.
+该文件大小约为 159M，因此通过 GitHub Releases 分发，而不是直接跟踪在 Git 仓库中。
 
-## Train
+## 训练
 
-Example WHU training command:
+WHU 数据集训练命令示例：
 
 ```bash
 python train_AOGMF.py \
@@ -156,11 +151,11 @@ python train_AOGMF.py \
   --val_root dataset/WHU-CD256-HANet/val/
 ```
 
-The script writes checkpoints under `output_ablation/WHU/AOGMF_APM+MBDCB+PFF+CGA*` by default.
+脚本默认会将 checkpoint 保存到 `output_ablation/WHU/AOGMF_APM+MBDCB+PFF+CGA*`。
 
-## Test
+## 测试
 
-Smoke test with the included sample:
+使用仓库内置样例进行 smoke test：
 
 ```bash
 python test.py \
@@ -173,7 +168,7 @@ python test.py \
   --save_path test_result_smoke/
 ```
 
-Full WHU test:
+对 WHU 完整测试集进行测试：
 
 ```bash
 python test.py \
@@ -186,7 +181,7 @@ python test.py \
   --save_path test_result_ablation/
 ```
 
-In restricted environments where matplotlib or font caches are not writable, run the same command with temporary cache directories:
+如果运行环境中 `matplotlib` 或字体缓存目录不可写，可使用临时缓存目录运行相同命令：
 
 ```bash
 conda run -n cgnet env MPLCONFIGDIR=/tmp/aogmf-mpl XDG_CACHE_HOME=/tmp/aogmf-cache python test.py \
@@ -199,9 +194,9 @@ conda run -n cgnet env MPLCONFIGDIR=/tmp/aogmf-mpl XDG_CACHE_HOME=/tmp/aogmf-cac
   --save_path test_result_smoke/
 ```
 
-## Verification
+## 验证记录
 
-The following checks were run successfully in the local environment:
+以下检查已在本地环境中验证通过：
 
 ```bash
 python -m py_compile test.py train_AOGMF.py network/AOGMF.py
